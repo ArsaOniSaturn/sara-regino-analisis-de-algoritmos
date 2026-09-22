@@ -57,7 +57,7 @@ def generar_inverso(n: int) -> list[int]:
 
 
 
-def medir_algoritmo(datos: list[int]) -> tuple[float, int]:
+def medir_algoritmo(algoritmo, datos: list[int]) -> tuple[float, int]:
     """
     Cronometra un algoritmo de ordenamiento y retorna tiempo y comparaciones.
 
@@ -69,7 +69,7 @@ def medir_algoritmo(datos: list[int]) -> tuple[float, int]:
     """
 
     inicio = time.perf_counter()
-    _, comparaciones = insertion_sort(datos)
+    _, comparaciones = algoritmo(datos)
     fin = time.perf_counter()
     tiempo_ejecucion = fin - inicio
 

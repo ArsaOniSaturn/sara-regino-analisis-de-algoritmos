@@ -4,6 +4,7 @@ from algoritmos import insertion_sort
 from datos import generar_aleatorio, generar_casi_ordenado, generar_inverso, medir_algoritmo
 from algoritmos import grafica_comparaciones, grafica_tiempo
 
+
 def ejecutar_experimento():
     tamanios = [100, 200, 400, 800, 1600, 3200, 6400]
     escenarios = {
@@ -24,7 +25,7 @@ def ejecutar_experimento():
             else:
                 datos = generador(n, semilla=42)
 
-            tiempo_ejecucion, comparaciones = medir_algoritmo(datos)
+            tiempo_ejecucion, comparaciones = medir_algoritmo(insertion_sort, datos)
 
             #Gráficas
             resultados_grafica[escenario].append({

@@ -5,7 +5,15 @@ from datos import generar_aleatorio, generar_casi_ordenado, generar_inverso, med
 from algoritmos import grafica_comparaciones, grafica_tiempo
 
 
-def ejecutar_experimento():
+def ejecutar_experimento() -> None:
+    """
+    Ejecuta la simulación del desempeño de Insertion Sort sobre los escenarios A, B y C.
+
+    Evalúa el algoritmo para 7 tamaños de entrada (n) distintos, registrando
+    el tiempo de ejecución y el número de comparaciones en una tabla formateada.
+    Al finalizar, llama a las funciones encargadas de generar y guardar las gráficas.
+    """
+    
     tamanios = [100, 200, 400, 800, 1600, 3200, 6400]
     escenarios = {
         "A - Aleatorio": generar_aleatorio,

@@ -4,7 +4,15 @@ from datos import medir_algoritmo, generar_aleatorio
 from algoritmos import insertion_sort, merge_sort, graficar_comparacion_tiempos
 
 
-def ejecutar_experimento_parte4():
+def ejecutar_experimento_parte4() -> None:
+    """
+    Compara el desempeño en tiempo de ejecución entre Insertion Sort y Merge Sort.
+
+    Evalúa ambos algoritmos sobre el Escenario A (Aleatorio) usando los mismos
+    tamaños de entrada (n) para garantizar una medición justa con time.perf_counter().
+    Muestra los resultados comparativos en consola y genera la gráfica 'parte4_tiempo.png'.
+    """
+
     tamanios = [100, 200, 400, 800, 1600, 3200, 6400]
     tiempos_insertion = []
     tiempos_merge = []

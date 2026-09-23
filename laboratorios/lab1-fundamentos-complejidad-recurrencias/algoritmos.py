@@ -85,9 +85,16 @@ def merge_sort(datos: list[int]) -> tuple[list[int], int]:
 
 ### FUNCIONES PARA LAS GRÁFICAS
 
-def grafica_comparaciones(resultados: dict):
-    """
-    Genera y guarda la gráfica de Comparaciones vs Tamaño de entrada
+def grafica_comparaciones(resultados: dict) -> None:
+    """Genera y guarda la gráfica del número de comparaciones frente al tamaño de entrada (n).
+
+    Construye un gráfico de líneas para comparar el crecimiento de las
+    comparaciones realizadas por Insertion Sort en los escenarios A, B y C.
+
+    Args:
+        resultados: Diccionario cuyas claves son los nombres de los
+            escenarios y cuyos valores son listas de diccionarios con las
+            claves 'n' (tamaño) y 'comparaciones' (conteo).
     """
 
     plt.figure(figsize=(10, 5))
@@ -105,9 +112,16 @@ def grafica_comparaciones(resultados: dict):
     plt.savefig('laboratorios\lab1-fundamentos-complejidad-recurrencias\graficas\parte3_comparaciones.png')
 
 
-def grafica_tiempo(resultados: dict):
-    """
-        Genera y guarda la gráfica de Tiempo vs Tamaño de entrada
+def grafica_tiempo(resultados: dict) -> None:
+    """Genera y guarda la gráfica del tiempo de ejecución frente al tamaño de entrada (n).
+
+    Construye un gráfico de líneas para comparar los tiempos de ejecución
+    registrados por Insertion Sort en los escenarios A, B y C.
+
+    Args:
+        resultados: Diccionario cuyas claves son los nombres de los
+            escenarios y cuyos valores son listas de diccionarios con las
+            claves 'n' (tamaño) y 'tiempo' (en segundos).
     """
 
     plt.figure(figsize=(10, 5))
@@ -125,9 +139,17 @@ def grafica_tiempo(resultados: dict):
     plt.savefig('laboratorios\lab1-fundamentos-complejidad-recurrencias\graficas\parte3_tiempo.png')
 
 
-def graficar_comparacion_tiempos(tamanios: list[int], tiempos_insertion: list[float], tiempos_merge: list[float]):
+def graficar_comparacion_tiempos(tamanios: list[int], tiempos_insertion: list[float], tiempos_merge: list[float]) -> None:
     """
-        Genera y guarda la gráfica de Tiempo vs Tamaño de entrada
+    Genera la gráfica comparativa de tiempo entre Insertion Sort y Merge Sort
+        aplicados sobre el Escenario A (Aleatorio).
+
+    Args:
+        tamanios: Lista con los tamaños de entrada evaluados (n).
+        tiempos_insertion: Tiempos de ejecución registrados por
+            Insertion Sort en segundos.
+        tiempos_merge: Tiempos de ejecución registrados por Merge
+            Sort en segundos.
     """
     
     plt.figure(figsize=(10, 6))

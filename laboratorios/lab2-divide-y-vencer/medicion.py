@@ -5,10 +5,14 @@ import matplotlib.pyplot as plt
 from subarreglo import subarreglo_fuerza_bruta, subarreglo_maximo
 
 
-def ejecutar_experimento():
-    """
-    Ejecuta las mediciones de tiempo de las funciones subarreglo_fuerza_bruta() y
-    subarreglo_maximo(). Además, genera la gráfica 'tiempo vs. tamaño de entrada'
+def ejecutar_experimento() -> None:
+
+    """Mide los tiempos de ambos algoritmos y genera la gráfica.
+
+    Para cada tamaño de entrada genera datos aleatorios, mide el tiempo
+    de 'subarreglo_fuerza_bruta' y de 'subarreglo_maximo', verifica
+    que ambos devuelvan la misma suma y guarda la gráfica
+    'tiempo vs. tamaño de entrada' en 'graficas/tiempo_vs_n.png'.
     """
 
     random.seed(42)
@@ -48,7 +52,10 @@ def ejecutar_experimento():
             abs(suma_fb - suma_dv) < 1e-9
         ), f"Error de coincidencia en N={n}: FB={suma_fb}, DV={suma_dv}"
 
-        print(f"{n:<8}{tiempo_fb:<20.6f}{tiempo_dv:<22.6f}{'Sí ->', {suma_fb}, '=', {suma_dv}}")
+        print(
+            f"{n:<8}{tiempo_fb:<20.6f}{tiempo_dv:<22.6f}"
+            f"Sí -> {suma_fb} = {suma_dv}"
+        )
 
     # Asegurar que el directorio de destino exista
     os.makedirs("graficas", exist_ok=True)

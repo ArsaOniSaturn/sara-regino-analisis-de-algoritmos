@@ -1,3 +1,4 @@
+import os
 import random
 import time
 import matplotlib.pyplot as plt
@@ -49,6 +50,8 @@ def ejecutar_experimento():
 
         print(f"{n:<8}{tiempo_fb:<20.6f}{tiempo_dv:<22.6f}{'Sí ->', {suma_fb}, '=', {suma_dv}}")
 
+    # Asegurar que el directorio de destino exista
+    os.makedirs("graficas", exist_ok=True)
 
     # Configuración de la gráfica
     plt.figure(figsize=(9, 6))
@@ -78,7 +81,9 @@ def ejecutar_experimento():
     plt.tight_layout()
 
     # Guardar gráfica
-    plt.savefig(r'laboratorios\lab2-divide-y-vencer\graficas\tiempo_vs_n.png')
+    ruta_grafica = os.path.join("graficas", "tiempo_vs_n.png")
+    plt.savefig(ruta_grafica, dpi=300)
+    plt.close()
 
     print("\nEl experimento se realizó con éxito.")
 

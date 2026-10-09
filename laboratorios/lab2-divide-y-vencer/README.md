@@ -179,7 +179,12 @@ Ahora, realizando una estimación para 1.000.000 de registros ($n = 10^6$):
 
 Tomando como base la medición mostrada en *resultados.png* $n = 8000$ ($t_{\text{FB}} = 8.132213\text{ s}$ y $t_{\text{DV}} = 0.035503\text{ s}$) y considerando el factor de escala $k = \frac{10^6}{8000} = 125$ (significando que el arreglo de un millón de datos es 125 veces más grande que el de 8.000):
 
-- **Fuerza Bruta:** Escalando cuadráticamente ($k^2 = 125^2 = 15.625$):$$t(10^6) \approx 8.132213 \cdot 15.625 \approx 127.065\text{ segundos } (\approx 35.3\text{ minutos}).$$
-- **Divide y Vencerás:** Escalando por $k \cdot \frac{\log_2(10^6)}{\log_2(8000)} = 125 \cdot \frac{19.93}{12.96} \approx 192.2$:$$t(10^6) \approx 0.035503 \cdot 192.2 \approx 6.82\text{ segundos.}$$
+- **Fuerza Bruta:** Escalando cuadráticamente ($k^2 = 125^2 = 15.625$):
+
+    $t(10^6) \approx 8.132213 \cdot 15.625 \approx 127.065\text{ segundos } (\approx 35.3\text{ minutos}).$
+
+- **Divide y Vencerás:** Escalando por $k \cdot \frac{\log_2(10^6)}{\log_2(8000)} = 125 \cdot \frac{19.93}{12.96} \approx 192.2$:
+
+    $t(10^6) \approx 0.035503 \cdot 192.2 \approx 6.82\text{ segundos.}$
 
 Estas cifras son estimaciones teóricas extrapoladas a partir de las constantes de tiempo obtenidas en $n = 8000$ y la complejidad asintótica de cada algoritmo.

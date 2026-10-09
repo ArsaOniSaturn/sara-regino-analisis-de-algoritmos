@@ -2,6 +2,7 @@
  
  
 def subarreglo_fuerza_bruta(valores: list[float]) -> tuple[int, int, float]:
+
     """Encuentra la mejor racha probando todos los pares de dias (i, j).
  
     Args:
@@ -29,7 +30,10 @@ def subarreglo_fuerza_bruta(valores: list[float]) -> tuple[int, int, float]:
     return mejor_inicio, mejor_fin, max_suma
  
  
-def suma_cruzada(valores: list[float], inicio: int, medio: int, fin: int) -> tuple[int, int, float]:
+def suma_cruzada(
+        valores: list[float], inicio: int, medio: int, fin: int
+) -> tuple[int, int, float]:
+    
     """Encuentra el mejor tramo que cruza el punto medio.
  
     Args:
@@ -67,7 +71,10 @@ def suma_cruzada(valores: list[float], inicio: int, medio: int, fin: int) -> tup
     return mejor_izq, mejor_der, max_suma_izq + max_suma_der
  
  
-def subarreglo_maximo(valores: list[float], inicio: int, fin: int) -> tuple[int, int, float]:
+def subarreglo_maximo(
+        valores: list[float], inicio: int, fin: int
+) -> tuple[int, int, float]:
+    
     """Encuentra la mejor racha por divide y venceras.
  
     Args:
@@ -88,7 +95,9 @@ def subarreglo_maximo(valores: list[float], inicio: int, fin: int) -> tuple[int,
     # Llamadas recursivas
     izq_inicio, izq_fin, izq_suma = subarreglo_maximo(valores, inicio, medio)
     der_inicio, der_fin, der_suma = subarreglo_maximo(valores, medio + 1, fin)
-    cruz_inicio, cruz_fin, cruz_suma = suma_cruzada(valores, inicio, medio, fin)
+    cruz_inicio, cruz_fin, cruz_suma = suma_cruzada(
+        valores, inicio, medio, fin
+    )
 
     # Comparación de los tres casos
     if izq_suma >= der_suma and izq_suma >= cruz_suma:

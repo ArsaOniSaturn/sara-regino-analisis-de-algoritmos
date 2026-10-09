@@ -1,3 +1,9 @@
+"""Experimento de tiempos: fuerza bruta vs. divide y vencerás.
+
+Mide el tiempo de 'subarreglo_fuerza_bruta' y 'subarreglo_maximo' para
+distintos tamaños de entrada y guarda la gráfica en 'graficas/'.
+"""
+
 import os
 import random
 import time
@@ -23,8 +29,12 @@ def ejecutar_experimento() -> None:
     tiempo_fuerza_bruta = []
     tiempo_div_vencer = []
 
-    print(f"{'n':<8}{'Fuerza Bruta (s)':<20}{'Divide y Vencerás (s)':<22}{'FB = DV?'}")
-    print("-" * 65)
+    encabezado = (
+        f"{'n':<8}{'Fuerza Bruta (s)':<20}"
+        f"{'Divide y Vencerás (s)':<22}{'FB = DV?'}"
+    )
+    print(encabezado)
+    print("-" * len(encabezado))
 
     for n in tamanios:
 
@@ -80,7 +90,9 @@ def ejecutar_experimento() -> None:
     )
 
     # Etiquetas
-    plt.title("Tiempo de Ejecución vs. Tamaño de Entrada (n)", fontsize=14, pad=12)
+    plt.title(
+        "Tiempo de Ejecución vs. Tamaño de Entrada (n)", fontsize=14, pad=12
+    )
     plt.xlabel("Tamaño de la entrada n (número de días)", fontsize=12)
     plt.ylabel("Tiempo de ejecución (segundos)", fontsize=12)
     plt.grid(True, linestyle="--", alpha=0.6)

@@ -173,7 +173,7 @@ Un recorrido lineal resuelve el problema en una sola pasada con $n-1$ comparacio
 
 **Solución**
 
-Recomiendo utilizar el algoritmo Divide y Vencerás ($\Theta(n \log n)$). Fuerza Bruta es inviable para volúmenes masivos.
+Recomiendo utilizar el algoritmo Divide y Vencerás. Fuerza Bruta es inviable para volúmenes masivos.
 
 Ahora, realizando una estimación para 1.000.000 de registros ($n = 10^6$):
 

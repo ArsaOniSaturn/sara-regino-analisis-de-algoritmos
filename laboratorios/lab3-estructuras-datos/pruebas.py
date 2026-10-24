@@ -78,3 +78,4 @@ if __name__ == "__main__":
     probar_colision_forzada_y_factor_carga()
     probar_colecciones_aleatorias()
     print("Todas las pruebas pasaron")
+    

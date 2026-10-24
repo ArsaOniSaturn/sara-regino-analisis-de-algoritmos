@@ -4,11 +4,11 @@ Nombre Estudiante: Sara Regino Ferraro
 
 ## Instrucciones para reproducir el experimento
 
-### 1. Clonar el repositorio y acceder a la carpeta
+### 1. Clonar el repositorio y acceder a él
 
 ```bash
-git clone <https://github.com/ArsaOniSaturn/sara-regino-analisis-de-algoritmos.git>
-cd laboratorios/lab3-estructuras-datos ##REVISAAAAARRRR
+git clone https://github.com/ArsaOniSaturn/sara-regino-analisis-de-algoritmos.git
+cd sara-regino-analisis-de-algoritmos
 ``` 
 
 ### 2. Creación e instalación del entorno virtual
@@ -39,18 +39,22 @@ pip install -r requirements.txt
 ```
 
 ### 3. Ejecución de los Experimentos
-Asegúrese de tener activo el entorno virtual antes de ejecutar cualquiera de los módulos.
+Una vez activado el entorno virtual, diríjase a la carpeta del laboratorio:
+
+```
+cd laboratorios/lab3-estructuras-datos
+```
 
 #### Parte 1: Ejecutar pruebas
 
 ```
-
+python pruebas.py
 ```
 
 #### Parte 2: Ejecutar mediciones y generar la gráfica
 
 ```
-
+python medicion.py
 ```
 
 ## Situación Problema a Resolver
@@ -95,8 +99,121 @@ Para garantizar el correcto funcionamiento de la ListaEnlazada y la TablaHash (e
 
 ### PARTE 2 - Medir y graficar
 
+**Metodología de Medición**
 
+Para evaluar el rendimiento empírico de las estructuras implementadas, se diseñó una batería de experimentos controlados en [medicion.py](medicion.py) bajo las siguientes condiciones:
 
+- Se utilizó time.perf_counter() para medir de forma estricta el tiempo transcurrido durante las operaciones de búsqueda .buscar(). Se excluyó por completo el tiempo de inicialización, inserción o generación de datos.
+- Para cada configuración se evaluaron búsquedas sobre 200 guías inexistentes de 10 dígitos (generadas mediante generar_guias_inexistentes con semilla fija 7 para garantizar la ausencia de falsos positivos y la reproducibilidad).
+- El experimento se ejecutó en 11 iteraciones independientes para estabilizar las mediciones frente al ruido del sistema operativo, calculando el tiempo promedio por búsqueda individual en milisegundos ($\text{ms}$).
 
+**Experimento A: Lista Enlazada vs. Tabla Hash frente al incremento de $n$**
+
+Para mantener el factor de carga aproximadamente constante en $\alpha \approx 2$, se seleccionó para cada tamaño de colección $n$ un número primo de casillas $m \approx \frac{n}{2}$.   
+
+#### Datos Medidos — Experimento A
+
+| $n$ (Guías) | $m$ (Casillas) | $\alpha$ | Tiempo Medio Lista ($\text{ms}$) | Tiempo Medio Tabla Hash ($\text{ms}$) |
+| :---: | :---: | :---: | :---: | :---: |
+| **100** | $53$ | $1.89$ | $0.15022$ | $0.00156$ |
+| **500** | $251$ | $1.99$ | $0.30161$ | $0.00146$ |
+| **1.000** | $509$ | $1.96$ | $0.55224$ | $0.00216$ |
+| **5.000** | $2.503$ | $2.00$ | $2.38152$ | $0.00225$ |
+| **20.000** | $10.007$ | $2.00$ | $10.93639$ | $0.00238$ |
+| **40.000** | $40.011$ | $2.00$ | $17.67850$ | $0.00183$ |
+
+*Los tiempos reales pueden variar*
+
+#### Gráfica lista vs tabla:
+
+![listavstabla](graficas/lista_vs_tabla.png)
+
+**Experimento B: Efecto del Factor de Carga ($\alpha$) en la Tabla Hash**
+
+Manteniendo una cantidad fija de $n = 20.000$ guías activas, se varió el número de casillas $m$ para evaluar el impacto directo del factor de carga $\alpha = \frac{n}{m}$ en el tiempo de respuesta de la tabla hash.
+
+#### Datos Medidos — Experimento B
+
+| $m$ (Casillas) | Factor de Carga ($\alpha$) | Tiempo Medio Tabla Hash ($\text{ms}$) |
+| :---: | :---: | :---: |
+| $40.009$ | $0.50$ | $0.00171$ |
+| $20.011$ | $1.00$ | $0.00221$ |
+| $5.003$ | $4.00$ | $0.00384$ |
+| $2.003$ | $9.99$ | $0.00890$ |
+
+*Los tiempos reales pueden variar*
+
+#### Gráfica tiempo vs alpha:
+
+![tiempovsalpha](graficas/tiempo_vs_alfa.png)
 
 ### PARTE 3 - Análisis
+
+#### Pregunta 1
+
+**Costo teórico.** Justifique por qué buscar en la lista enlazada cuesta Θ(n) para una guía inexistente, y por qué buscar en la tabla con encadenamiento cuesta en promedio Θ(1 + α). Diga qué supuesto sobre la función hash sostiene ese resultado y qué le pasaría a la tabla si todas las guías cayeran en la misma casilla.
+
+**Solución**
+
+En una lista enlazada, buscar una guía inexistente exige un recorrido lineal completo desde la cabeza hasta encontrar None, realizando exactamente $n$ comparaciones. Como no hay punteros directos ni acceso por índice, el costo en el peor y promedio caso es estrictamente $\Theta(n)$.
+
+En la tabla hash con encadenamiento, el proceso requiere dos pasos:
+
+ **1.** Evaluar la función hash $h(k) = k \bmod m$, lo cual se ejecuta en tiempo constante $\Theta(1)$.
+
+ **2.** Recorrer la lista enlazada alojada en la casilla resultante. En promedio, la cantidad de nodos en dicha casilla equivale al factor de carga $\alpha = \frac{n}{m}$, resultando en un costo de $\Theta(1 + \alpha)$. 
+ 
+Este resultado se sostiene bajo el Supuesto de Hash Uniforme Simple (SUHA), el cual establece que cada clave tiene la misma probabilidad de ser mapeada a cualquiera de las $m$ casillas, de manera independiente a las demás. Si este supuesto falla y todas las guías caen en la misma casilla, la tabla se degrada a una única lista enlazada, elevando la complejidad de búsqueda a $\Theta(n)$.
+
+#### Pregunta 2
+
+**Lo medido contra lo esperado.** A partir de su primera gráfica, tome dos valores consecutivos de n y calcule cuánto se multiplicó el tiempo de cada estructura; diga si coincide con Θ(n) y con Θ(1). Con su segunda gráfica, describa cómo cambia el tiempo cuando α crece y si es coherente con Θ(1 + α).
+
+**Solución**
+
+Analizando la primera gráfica (Experimento A) entre los puntos consecutivos $n_1 = 20.000$ y $n_2 = 40.000$:
+
+- **Lista Enlazada:** El tiempo de búsqueda aumentó de $10.93639\text{ ms}$ a $17.67850\text{ ms}$ (se multiplicó por $1.61\times$ al duplicar $n$). Este crecimiento marcadamente lineal confirma la tendencia teórica $\Theta(n)$.
+- **Tabla Hash:** El tiempo varió de $0.00238\text{ ms}$ a $0.00183\text{ ms}$ (se multiplicó por $0.77\times$). Al mantener $\alpha \approx 2$, el tiempo permanece acotado y prácticamente invarible, validando empíricamente la complejidad $\Theta(1)$.
+
+En la segunda gráfica (Experimento B), con $n = 20.000$ fijo, al reducir $m$ de $40.009$ a $2.003$, el factor de carga $\alpha$ creció de $0.50$ a $9.99$ y el tiempo subió de $0.00171\text{ ms}$ a $0.00890\text{ ms}$ ($5.2\times$ más lento). La curva describe una línea recta con pendiente positiva respecto a $\alpha$, lo cual es totalmente coherente con la fórmula $\Theta(1 + \alpha)$, ya que el costo depende directamente de la longitud de las sublistas.
+
+#### Pregunta 3
+
+**Explique las colisiones.** Explique qué es una colisión y por qué ocurre aunque la tabla tenga más casillas que guías. Describa cómo la resuelven el encadenamiento y el direccionamiento abierto, y diga qué ventaja y qué costo tiene cada uno. Use la colisión de las guías 10, 24 y 17 con m = 7 como ejemplo.
+
+**Solución**
+
+Una colisión ocurre cuando dos o más claves distintas producen el mismo índice al ser procesadas por la función hash ($h(k_1) = h(k_2)$). Ocurren incluso cuando $m > n$ debido al Principio del Cajón de Dirichle y a la distribución de las claves; por ejemplo, con $m = 7$, las guías 10, 24 y 17 producen $10 \bmod 7 = 3$, $24 \bmod 7 = 3$ y $17 \bmod 7 = 3$, colisionando en la casilla 3.
+
+- **Encadenamiento:** Mantiene una estructura auxiliar (lista enlazada) en cada casilla.
+    - Ventaja: La tabla no se llena totalmente si $n > m$ y soporta bien picos de carga.
+    - Costo: Uso adicional de memoria para los punteros de los nodos.
+- **Direccionamiento Abierto:** Busca una casilla libre alternativa dentro del mismo arreglo.
+    - Ventaja: Excelente eficiencia de memoria al no usar punteros externos.
+    - Costo: Susceptible al agrupamiento; cuando la tabla se llena, el rendimiento decae drásticamente y requiere cambiar el tamaño del arreglo.
+
+#### Pregunta 4
+
+**Tabla hash o árbol de búsqueda.** Para el monitoreo por rango ("guías entre X y Y"), ¿sirve la tabla hash? Justifique. Explique qué ofrece un árbol de búsqueda binario para esa consulta, y qué pasaría si las 400.000 guías llegaran ya ordenadas y se insertaran una a una: estime la altura resultante y el número aproximado de comparaciones, y compare con el caso de un árbol equilibrado.
+
+**Solución**
+
+Para la consulta de monitoreo por rango ("guías entre $X$ y $Y$"), la tabla hash no sirve, ya que desordena las claves mediante el módulo, obligando a inspeccionar todas las $m$ casillas ($\Theta(m + n)$).
+
+Un Árbol de Búsqueda Binario (BST) mantiene un orden simétrico. Permite realizar un recorrido en orden (in-order) o acotar la búsqueda desde la raíz, recuperando los elementos del rango en $\Theta(\log n + k)$, donde $k$ es el número de elementos devueltos.
+
+Si las 400.000 guías llegan estrictamente ordenadas y se insertan secuencialmente en un BST estándar no balanceado, el árbol se degenera completamente en una lista enlazada hacia la derecha. La altura resultante será de $400.000$ y buscar una guía inexistente tomará hasta $400.000$ comparaciones ($\Theta(n)$). En contraste, un árbol balanceado mantendría una altura acotada de $h \approx \log_2(400.000) \approx 19$ niveles, requiriendo máximo 19 comparaciones ($\Theta(\log n)$).
+
+#### Pregunta 5
+
+**Concepto para la jefa de operaciones.** Recomiende una estructura (o una combinación) para cubrir las dos necesidades. Estime, a partir de su medición, cuánto tardaría una búsqueda de una guía inexistente en cada estructura con 5.000.000 de envíos. Declare que es una estimación y explique el razonamiento (no use una regla de tres sin justificar la forma de la curva).
+
+**Solución**
+
+Se recomienda implementar una combinación de estructuras: una Tabla Hash para el call center (búsquedas puntuales por guía en $\Theta(1)$) y un Árbol Balanceado para operaciones (consultas por rango en $\Theta(\log n + k)$).
+
+Estimación para $5.000.000$ de envíos:
+
+- **Lista Enlazada:** Basado en la curva estrictamente lineal $\Theta(n)$, si con $n = 40.000$ la búsqueda tardó $17.68\text{ ms}$, para $n = 5.000.000$ ($125$ veces más datos), la búsqueda tomará aproximadamente $17.68\text{ ms} \times 125 \approx \mathbf{2.21\text{ segundos}}$ por consulta, un tiempo inaceptable para el call center.
+- **Tabla Hash ($\alpha \approx 2$):** Como la complejidad es $\Theta(1 + \alpha)$, el tiempo se mantiene constante e independiente de $n$. Se estima que la búsqueda mantendrá una latencia de apenas $\approx 0.002\text{ ms}$ ($2\text{ microsegundos}$), solucionando el problema operativo de inmediato.

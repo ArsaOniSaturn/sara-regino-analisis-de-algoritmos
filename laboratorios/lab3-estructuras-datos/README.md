@@ -199,11 +199,11 @@ Una colisión ocurre cuando dos o más claves distintas producen el mismo índic
 
 **Solución**
 
-Para la consulta de monitoreo por rango ("guías entre $X$ y $Y$"), la tabla hash no sirve, ya que desordena las claves mediante el módulo, obligando a inspeccionar todas las $m$ casillas [$\Theta(m + n)$].
+Para la consulta de monitoreo por rango ("guías entre $X$ y $Y$"), la tabla hash no sirve, ya que desordena las claves mediante el módulo, obligando a inspeccionar todas las $m$ casillas $(Θ(m + n))$.
 
-Un Árbol de Búsqueda Binario (BST) mantiene un orden simétrico. Permite realizar un recorrido en orden (in-order) o acotar la búsqueda desde la raíz, recuperando los elementos del rango en $\Theta(\log n + k)$, donde $k$ es el número de elementos devueltos.
+Un Árbol de Búsqueda Binario (BST) mantiene un orden simétrico. Permite realizar un recorrido en orden (in-order) o acotar la búsqueda desde la raíz, recuperando los elementos del rango en $(Θ(log n + k))$, donde $k$ es el número de elementos devueltos.
 
-Si las 400.000 guías llegan estrictamente ordenadas y se insertan secuencialmente en un BST estándar no balanceado, el árbol se degenera completamente en una lista enlazada hacia la derecha. La altura resultante será de $400.000$ y buscar una guía inexistente tomará hasta $400.000$ comparaciones [$\Theta(n)$]. En contraste, un árbol balanceado mantendría una altura acotada de $h \approx \log_2(400.000) \approx 19$ niveles, requiriendo máximo 19 comparaciones [$\Theta(\log n)$].
+Si las 400.000 guías llegan estrictamente ordenadas y se insertan secuencialmente en un BST estándar no balanceado, el árbol se degenera completamente en una lista enlazada hacia la derecha. La altura resultante será de $400.000$ y buscar una guía inexistente tomará hasta $400.000$ comparaciones $(Θ(n))$. En contraste, un árbol balanceado mantendría una altura acotada de $h \approx \log_2(400.000) \approx 19$ niveles, requiriendo máximo 19 comparaciones $(Θ(log n))$.
 
 #### Pregunta 5
 
@@ -211,7 +211,7 @@ Si las 400.000 guías llegan estrictamente ordenadas y se insertan secuencialmen
 
 **Solución**
 
-Se recomienda implementar una combinación de estructuras: una Tabla Hash para el call center (búsquedas puntuales por guía en [$\Theta(1)$]) y un Árbol Balanceado para operaciones (consultas por rango en [$\Theta(\log n + k)$]).
+Se recomienda implementar una combinación de estructuras: una Tabla Hash para el call center (búsquedas puntuales por guía en $(Θ(1))$) y un Árbol Balanceado para operaciones (consultas por rango en $(Θ(log n + k))$).
 
 Estimación para $5.000.000$ de envíos:
 

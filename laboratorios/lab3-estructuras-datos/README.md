@@ -211,7 +211,7 @@ Si las 400.000 guías llegan estrictamente ordenadas y se insertan secuencialmen
 
 **Solución**
 
-Se recomienda implementar una combinación de estructuras: una Tabla Hash para el call center (búsquedas puntuales por guía en ($(Θ(1))$)) y un Árbol Balanceado para operaciones (consultas por rango en ($(Θ(log n + k))$)).
+Se recomienda implementar una combinación de estructuras: una Tabla Hash para el call center (búsquedas puntuales por guía en (Θ(1))) y un Árbol Balanceado para operaciones (consultas por rango en (Θ(log n + k))).
 
 Estimación para $5.000.000$ de envíos:
 

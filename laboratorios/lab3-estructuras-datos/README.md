@@ -71,3 +71,32 @@ La jefa de operaciones le pide un concepto técnico: ¿qué estructura debe reem
 guía:    1000000010   1000000024   1000000017   1000000005
 estado:  en bodega    en reparto   en bodega    entregado
 ```
+
+
+### PARTE 1 - Implementar y verificar las dos estructuras
+
+Para garantizar el correcto funcionamiento de la ListaEnlazada y la TablaHash (encuentrese en: [estructuras.py](estructuras.py)), se desarrolló un conjunto de pruebas unitarias automatizadas [(pruebas.py)](pruebas.py) mediante aserciones (assert), cubriendo los siguientes escenarios:
+
+**1. Búsqueda exitosa e infructuosa:**
+- Se insertaron elementos en ambas estructuras y se verificó que la búsqueda devuelva el valor correcto cuando la guía existe.
+- Se consultaron guías inexistentes para confirmar que ambas devuelven None sin generar errores.
+
+**2. Manejo de colisiones forzadas:**
+- Con un tamaño de tabla $m = 7$, se insertaron las guías 10, 24 y 17. Se verificó mediante la función hash ($k \bmod 7$) que las tres colisionan en la casilla indexada con el índice $3$.
+- Se comprobó que la casilla 3 contenga una ListaEnlazada de tamaño 3 y que las tres guías se puedan recuperar individualmente sin pérdida de información.
+
+**3. Cálculo del factor de carga:**
+- Se validó que el método factor_carga() devuelva exactamente el valor teórico $\alpha = \frac{n}{m} = \frac{3}{7} \approx 0.4285$ tras las tres inserciones iniciales.
+
+**4. Equivalencia de comportamiento en conjuntos aleatorios:**
+- Se evaluaron 25 colecciones generadas aleatoriamente (con variaciones en $m$ entre 5 y 50, y $n$ entre 10 y 100).
+- Para cada colección, se contrastaron búsquedas de guías existentes e inexistentes, confirmando que la ListaEnlazada y la TablaHash retornan respuestas idénticas en el 100% de los casos.
+
+
+### PARTE 2 - Medir y graficar
+
+
+
+
+
+### PARTE 3 - Análisis

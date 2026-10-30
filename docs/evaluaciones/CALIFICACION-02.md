@@ -36,7 +36,7 @@ Muy buen trabajo: el código es correcto y el informe responde todas las pregunt
 
 ## 3. Corrección de la implementación (23 / 25)
 **Lo que hizo bien:**
-- Las tres funciones dan la suma correcta en todos los casos pedidos y coinciden en miles de listas aleatorias que probé.
+- Las tres funciones dan la suma correcta en todos los casos pedidos y coinciden en miles de listas aleatorias.
 - `subarreglo_maximo` resuelve los tres casos sin llamar a la fuerza bruta y ninguna función modifica la lista recibida.
 - Las pruebas cubren todos los casos pedidos y 25 listas aleatorias.
 
